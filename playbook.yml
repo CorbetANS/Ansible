@@ -2,13 +2,14 @@
 - hosts: all
   become: true
   tasks:
-    # - name: update distibution
-    #   apt:
-    #     update_cache: yes
-    # - name: install docker
-    #   apt:
-    #     name: 
-    #       - docker
+    - name: update distibution
+      apt:
+        update_cache: yes
+    - name: install docker
+      apt:
+        name: 
+          - docker
+          - python3
     - name: delete directory
       file:
         path: /TP_Docker
