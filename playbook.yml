@@ -2,17 +2,18 @@
 - hosts: all
   become: true
   tasks:
-  # - name: update distribution
-  #   apt:
-  #     update_cache: yes
-  # - name: install git
-  #   apt:
-  #     name:
-  #       - git
-  #       - nodejs
-  #       - npm
-  - name: file configuration copy
+  - name: update distribution
+    apt:
+      update_cache: yes
+  - name: install apache2
+    apt:
+      name:
+        - apache2
+  - name: droits ecriture
+    command: chmod -R 0777 /var/www/html/;
+  - name: file html copy
     copy: 
-      src: conf/
-      dest: /
-  
+      src: trucshtml/
+      dest: /var/www/html/
+  - name: start apache2
+    command: systemctl start apache2
