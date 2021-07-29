@@ -10,6 +10,8 @@
         name: 
           - docker
           - python3
+          - python3-pip
+          - python-pip
     - name: install pip docker
       pip:
         name: docker
@@ -21,6 +23,7 @@
       copy: 
         src: TP_Docker/
         dest: /TP_Docker/
+    # - name: start docker
     - name: image worker
       docker_image:
         name: worker-app
