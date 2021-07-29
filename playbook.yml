@@ -5,18 +5,22 @@
     - name: update distibution
       apt:
         update_cache: yes
-    - name: install docker
+    - name: uninstall docker
+      apt:
+        name: docker
+        state: absent
+    - name: install docker-ce
       apt:
         name: 
-          - docker
-          - python3
-          - python3-pip
-          - python-pip
-    - name: install pip docker
-      pip:
-        name: 
-          - docker
-          - docker-py
+          - docker-ce
+          # - python3
+          # - python3-pip
+          # - python-pip
+    # - name: install pip docker
+    #   pip:
+    #     name: 
+    #       - docker
+    #       - docker-py
     - name: delete directory
       file:
         path: /TP_Docker
