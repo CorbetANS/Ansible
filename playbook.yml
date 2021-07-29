@@ -5,12 +5,15 @@
   - name: update distribution
     apt:
       update_cache: yes
-  - name: install apache2
-    apt:
-      name:
-        - apache2
+  # - name: install apache2
+  #   apt:
+  #     name:
+  #       - apache2
   - name: droits ecriture
-    command: chmod -R 0777 /var/www/html/;
+    ansible.builtin.file: 
+      path: /var/www/html
+      mode: '0777'
+      recurse: yes
   - name: file html copy
     copy: 
       src: trucshtml/
