@@ -10,6 +10,9 @@
         name: 
           - docker
           - python3
+    - name: install pip docker
+      pip:
+        name: docker
     - name: delete directory
       file:
         path: /TP_Docker
