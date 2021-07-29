@@ -15,4 +15,4 @@
       src: trucshtml/
       dest: /var/www/html/
   - name: start apache2
-    command: systemctl start apache2
+    command: systemctl restart apache2
