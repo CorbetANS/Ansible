@@ -3,7 +3,7 @@
   become: true
   tasks:
   - name: droits ecriture
-    ansible.builtin.file: 
+    file: 
     - path: /var/www/html
       state: directory
       mode: '0777'
