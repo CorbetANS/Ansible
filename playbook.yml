@@ -4,7 +4,7 @@
   tasks:
   - name: droits ecriture
     ansible.builtin.file: 
-      path: /var/www/html
+    - path: /var/www/html
       state: directory
       mode: '0777'
       owner: root
