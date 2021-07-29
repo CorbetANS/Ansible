@@ -1,0 +1,41 @@
+services:
+    redis:
+        image: redis:5.0-alpine3.10
+        networks:
+            - front
+    db:
+        image: postgres:9.4
+        environment: 
+            POSTGRES_PASSWORD: "postgres"
+            POSTGRES_USER: "postgres"
+        networks:
+            - back
+    worker:
+        build: ./worker/.
+        depends_on:
+            - redis
+            - db
+        networks:
+            - front
+            - back
+            
+    vote:
+        build: ./vote/.
+        depends_on:
+            - redis
+        networks:
+            - front
+        ports:
+            - "3000:80"
+    result:
+        build: ./result/.
+        depends_on:
+            - db
+        networks:
+            - back
+        ports:
+            - "3001:4000"
+
+networks:
+    front:
+    back:

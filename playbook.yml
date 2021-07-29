@@ -2,17 +2,39 @@
 - hosts: all
   become: true
   tasks:
-  # - name: droits ecriture
-  #   ansible.builtin.file: 
-  #   - path: /var/www/html
-  #     state: directory
-  #     mode: '0777'
-  #     owner: root
-  #     group: root
-  #     recurse: yes
-  - name: file html copy
-    copy: 
-      src: trucshtml/
-      dest: /var/www/html/
-  - name: start apache2
-    command: systemctl restart apache2
+    - name: update distibution
+      apt:
+        update_cache: yes
+    - name: install docker
+      apt:
+        name: 
+          - docker
+    - name: copy repo TP
+      copy: 
+        src: TP_Docker/
+        dest: /TP_Docker/
+    - name: image worker
+      docker_image:
+        name: worker-app
+        build: 
+          path: /TP_Docker/worker
+          source: build
+        state: present
+    - name: image vote
+      docker_image:
+        name: vote-app
+        build: 
+          path: /TP_Docker/vote
+          source: build
+        state: present
+    - name: image result
+      docker_image:
+        name: result-app
+        build: 
+          path: /TP_Docker/result
+          source: build
+        state: present
+    - name: change folder rights
+      file:
+        path: /TP_Docker
+        state: absent
