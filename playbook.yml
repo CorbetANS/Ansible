@@ -2,13 +2,17 @@
 - hosts: all
   become: true
   tasks:
-    - name: update distibution
-      apt:
-        update_cache: yes
-    - name: install docker
-      apt:
-        name: 
-          - docker
+    # - name: update distibution
+    #   apt:
+    #     update_cache: yes
+    # - name: install docker
+    #   apt:
+    #     name: 
+    #       - docker
+    - name: delete directory
+      file:
+        path: /TP_Docker
+        state: absent
     - name: copy repo TP
       copy: 
         src: TP_Docker/
@@ -16,25 +20,25 @@
     - name: image worker
       docker_image:
         name: worker-app
-        build: 
+        buildargs: 
           path: /TP_Docker/worker
           source: build
         state: present
     - name: image vote
       docker_image:
         name: vote-app
-        build: 
+        buildargs: 
           path: /TP_Docker/vote
           source: build
         state: present
     - name: image result
       docker_image:
         name: result-app
-        build: 
+        buildargs: 
           path: /TP_Docker/result
           source: build
         state: present
-    - name: change folder rights
+    - name: delete directory
       file:
         path: /TP_Docker
         state: absent
