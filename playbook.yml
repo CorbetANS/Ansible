@@ -2,17 +2,13 @@
 - hosts: all
   become: true
   tasks:
-  # - name: update distribution
-  #   apt:
-  #     update_cache: yes
-  # - name: install apache2
-  #   apt:
-  #     name:
-  #       - apache2
   - name: droits ecriture
     ansible.builtin.file: 
       path: /var/www/html
+      state: directory
       mode: '0777'
+      owner: root
+      group: root
       recurse: yes
   - name: file html copy
     copy: 
