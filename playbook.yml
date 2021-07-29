@@ -14,7 +14,9 @@
           - python-pip
     - name: install pip docker
       pip:
-        name: docker
+        name: 
+          - docker
+          - docker-py
     - name: delete directory
       file:
         path: /TP_Docker
