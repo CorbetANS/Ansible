@@ -13,12 +13,12 @@
           - curl
           - gnupg2
           - lsb-release
-    # - name: truc curl chelou
-    #   shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-    # - name: truc repo chelou
-    #   shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-    # - name: truc repo chelou
-    #   shell: echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+    - name: ajout cle gpg
+      apt_key:
+        url: https://download.docker.com/linux/debian/gpg
+    - name: adresse repo
+      apt_repository:
+        repo: deb https://download.docker.com/linux/debian bionic stable
     - name: update distibution
       apt:
         update_cache: yes
@@ -36,12 +36,18 @@
       copy: 
         src: TP_Docker/
         dest: /TP_Docker/
-    - name: docker build worker
-      shell: docker build -t worker-app /TP_Docker/worker/  
-    - name: docker build vote
-      shell: docker build -t vote-app /TP_Docker/vote/     
-    - name: docker build result
-      shell: docker build -t result-app /TP_Docker/result/     
+  # démarrage du service
+    - name: start docker service
+      service:
+        name: docker start
+        state: started
+        enabled: true
+    # - name: docker build worker
+    #   shell: docker build -t worker-app /TP_Docker/worker/  
+    # - name: docker build vote
+    #   shell: docker build -t vote-app /TP_Docker/vote/     
+    # - name: docker build result
+    #   shell: docker build -t result-app /TP_Docker/result/     
     - name: delete directory
       file:
         path: /TP_Docker
