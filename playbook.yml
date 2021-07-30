@@ -42,7 +42,6 @@
         build: 
           path: /TP_Docker/worker
         state: present            
-        source: 'build'
     - name: image vote
       docker_image:
         name: vote-app
