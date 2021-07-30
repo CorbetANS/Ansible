@@ -5,6 +5,7 @@
     - name: update distibution
       apt:
         update_cache: yes
+      when: ansible_facts['ansible_os_family'] == 'Debian'
     - name: install prerequisite docker
       apt:
         name: 
