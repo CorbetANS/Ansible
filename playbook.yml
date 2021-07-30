@@ -5,23 +5,31 @@
     - name: update distibution
       apt:
         update_cache: yes
-    - name: install docker
+    - name: install prerequisite docker
       apt:
         name: 
           - apt-transport-https
           - ca-certificates
           - curl
           - gnupg2
-          - software-properties-common
+          - lsb-release
     - name: truc curl chelou
-      shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo apt-key add -
+      shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
     - name: truc repo chelou
       shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
+    
+     
+    - name: truc repo chelou
+      shell: echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     - name: update distibution
       apt:
         update_cache: yes
-    - name: policy docker-ce
-      shell: apt-cache policy docker-ce
+    - name: install docker-ce
+      apt:
+        name: 
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
     - name: delete directory
       file:
         path: /TP_Docker
