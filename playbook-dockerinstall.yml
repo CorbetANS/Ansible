@@ -2,11 +2,14 @@
 - hosts: all
   become: true
   tasks:
-    - name: update distibution
+    - name: update distibution debian
       apt:
         update_cache: yes
       when: ansible_facts['os_family'] == 'Debian'
-    - name: install prerequisite docker
+    - name: update distibution centos
+      shell: yum install -y yum-utils
+      when: ansible_facts['os_family'] == 'RedHat'
+    - name: install prerequisite debian
       apt:
         name: 
           - apt-transport-https
@@ -15,6 +18,9 @@
           - gnupg2
           - lsb-release
       when: ansible_facts['os_family'] == 'Debian'
+    - name: install prerequisite centos
+      shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      when: ansible_facts['os_family'] == 'RedHat'
     - name: ajout cle gpg
       apt_key:
         url: https://download.docker.com/linux/debian/gpg
@@ -34,6 +40,9 @@
           - docker-ce-cli
           - containerd.io
       when: ansible_facts['os_family'] == 'Debian'
+    - name: install docker centos
+      shell: yum install docker-ce docker-ce-cli containerd.io
+      when: ansible_facts['os_family'] == 'RedHat'
     - name: delete directory
       file:
         path: /TP_Docker
