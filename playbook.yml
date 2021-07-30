@@ -36,12 +36,8 @@
       copy: 
         src: TP_Docker/
         dest: /TP_Docker/
-    - name: image worker
-      docker_image:
-        name: worker-app
-        build: 
-          path: /TP_Docker/worker
-        state: present            
+    - name: truc curl chelou
+      shell: docker build -t worker-app /TP_Docker/worker/          
     - name: image vote
       docker_image:
         name: vote-app
