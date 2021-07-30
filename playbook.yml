@@ -36,22 +36,12 @@
       copy: 
         src: TP_Docker/
         dest: /TP_Docker/
-    - name: truc curl chelou
-      shell: docker build -t worker-app /TP_Docker/worker/          
-    - name: image vote
-      docker_image:
-        name: vote-app
-        buildargs: 
-          path: /TP_Docker/vote
-          source: build
-        state: present
-    - name: image result
-      docker_image:
-        name: result-app
-        buildargs: 
-          path: /TP_Docker/result
-          source: build
-        state: present
+    - name: docker build worker
+      shell: docker build -t worker-app /TP_Docker/worker/  
+    - name: docker build vote
+      shell: docker build -t vote-app /TP_Docker/vote/     
+    - name: docker build result
+      shell: docker build -t result-app /TP_Docker/result/     
     - name: delete directory
       file:
         path: /TP_Docker
