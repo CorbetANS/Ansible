@@ -17,8 +17,6 @@
       shell: curl -fsSL https://download.docker.com/linux/debian/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
     - name: truc repo chelou
       shell: add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/debian $(lsb_release -cs) stable"
-    
-     
     - name: truc repo chelou
       shell: echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/debian $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     - name: update distibution
@@ -38,14 +36,13 @@
       copy: 
         src: TP_Docker/
         dest: /TP_Docker/
-    # - name: start docker
     - name: image worker
       docker_image:
         name: worker-app
-        buildargs: 
+        build: 
           path: /TP_Docker/worker
-          source: build
-        state: present
+        state: present            
+        source: build
     - name: image vote
       docker_image:
         name: vote-app
