@@ -20,11 +20,7 @@
         - result
         - worker 
     - name: build image
-      docker-image:
-        name: image-{{item}}
-        build:
-          path: /{{item}}
-          source: build
+      command: docker build -t {{item}} /{{item}}/.
       loop:
         - vote
         - result
