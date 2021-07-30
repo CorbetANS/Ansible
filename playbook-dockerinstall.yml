@@ -48,7 +48,3 @@
     #   shell: docker build -t vote-app /TP_Docker/vote/     
     # - name: docker build result
     #   shell: docker build -t result-app /TP_Docker/result/     
-    - name: delete directory
-      file:
-        path: /TP_Docker
-        state: absent

@@ -1,0 +1,31 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: create folder
+      file:
+        path: /{{item}}
+        state: directory
+        mode: '0755'
+      loop:
+        - vote
+        - worker
+        - result
+    - name: copy folder
+      copy:
+        src: TP_Docker/{{item}}/
+        dest: /{{item}}/
+      loop:
+        - vote
+        - result
+        - worker 
+    - name: build image
+      docker-image:
+        name: image-{{item}}
+        build:
+          path: /{{item}}
+          source: build
+      loop:
+        - vote
+        - result
+        - worker
